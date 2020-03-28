@@ -1,3 +1,4 @@
+
 package ohtu.ohtuvarasto;
 
 import org.junit.*;
@@ -65,4 +66,66 @@ public class VarastoTest {
         assertEquals(4, varasto.paljonkoMahtuu(), vertailuTarkkuus);
     }
 
+    @Test
+    public void varmitetaanEtteiMeneYli() {
+
+        varasto.lisaaVarastoon(11);
+        assertEquals(10, varasto.getSaldo(), vertailuTarkkuus);
+    }
+
+    @Test
+    public void varmistetaanEtteiOtetaMiinukselle() {
+        varasto.otaVarastosta(11);
+        assertEquals(0, varasto.getSaldo(), vertailuTarkkuus);
+    }
+
+    @Test
+    public void varmistetaanEtteiMiinuksellaVoiLisata() {
+        varasto.lisaaVarastoon(-1);
+        assertEquals(0, varasto.getSaldo(), vertailuTarkkuus);
+    }
+
+    @Test
+    public void varmistetaanEtteiMiinuksellaVoiOttaa() {
+        varasto.lisaaVarastoon(10);
+        varasto.otaVarastosta(-1);
+        assertEquals(10, varasto.getSaldo(), vertailuTarkkuus);
+    }
+
+    @Test
+    public void alkuSaldoEiVoiOllaMiinus() {
+        Varasto varasto = new Varasto(-10);
+        assertEquals(0, varasto.getSaldo(), vertailuTarkkuus);
+    }
+
+    @Test
+    public void testVarastonMaarittaminen() {
+        Varasto varasto = new Varasto(10, -10);
+        assertEquals(0, varasto.getSaldo(), vertailuTarkkuus);
+    }
+
+    @Test
+    public void testataanVarastonMaarittamista() {
+        Varasto varasto = new Varasto(5, 10);
+        assertEquals(5, varasto.getSaldo(), vertailuTarkkuus);
+    }
+
+    @Test
+    public void testataanVarastonMaarittamista2() {
+        Varasto varasto = new Varasto(-5, 10);
+        assertEquals(0, varasto.getTilavuus(), vertailuTarkkuus);
+    }
+
+    @Test
+    public void testataanVarastonMaarittamista3() {
+        Varasto varasto = new Varasto(10, 10);
+        assertEquals(10, varasto.getSaldo(), vertailuTarkkuus);
+    }
+
+    @Test
+    public void toStringinTestaamista() {
+        Varasto varasto = new Varasto(10, 5);
+
+        assertEquals("saldo = " + varasto.getSaldo() + ", vielä tilaa " + varasto.paljonkoMahtuu(), varasto.toString());
+    }
 }
